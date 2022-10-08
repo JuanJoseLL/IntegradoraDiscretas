@@ -1,24 +1,32 @@
 package model;
 
-public class Node<T> implements INode<T> {
 
-    @Override
-    public T getValue() {
-        return null;
+public class Node<T>  {
+    private int key;
+    private T element;
+
+    public Node(int key, T element) {
+        this.key = key;
+        this.element = element;
     }
 
-    @Override
-    public void setValue(T value) {
-
+    public T getElement() {
+        return element;
     }
 
-    @Override
-    public Node<T> getNext() {
-        return null;
+    public void setElement(T element) {
+        this.element = element;
     }
 
-    @Override
-    public void setNext(Node<T> next) {
-
+    public int getKey() {
+        return key;
     }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+
+
 }
+
