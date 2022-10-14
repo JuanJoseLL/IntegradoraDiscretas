@@ -1,15 +1,16 @@
-package model;
+package  model;
+import java.util.ArrayList;
+import generics.*;
+import model.*;
 
-import generics.IHash;
 
-public class MyHashTable<K,V> implements IHash<K,V> {
-
+public class HashTable<K,V> implements MyHashT<K,V> {
     private int m;
-    private HashNode<K,V>[] table;
+    private Data<K,V>[] table;
 
-    public MyHashTable(int m) {
+    public HashTable(int m) {
         this.m = m;
-        table = new HashNode[m];
+        table = new Data[m];
     }
     public int hash(K key) {
         return (Math.abs(key.hashCode())) % m;
@@ -18,9 +19,9 @@ public class MyHashTable<K,V> implements IHash<K,V> {
     @Override
     public void insert(K key, V value) {
         int insertKey = hash(key);
-        HashNode<K,V> nodeList = table[insertKey];
+        Data<K,V> nodeList = table[insertKey];
         if(nodeList == null) {
-            table[insertKey] = new HashNode<>(key, value);
+            table[insertKey] = new Data<>(key, value);
         } else {
             while (nodeList != null) {
                 if(nodeList.getKey().equals(key)) {
@@ -28,7 +29,7 @@ public class MyHashTable<K,V> implements IHash<K,V> {
                 }
                 nodeList = nodeList.getNext();
             }
-            HashNode<K,V> finalNode = new HashNode<>(key, value);
+            Data<K,V> finalNode = new Data<>(key, value);
             table[insertKey].setPrevious(finalNode);
             finalNode.setNext(table[insertKey]);
             table[insertKey] = finalNode;
@@ -39,7 +40,7 @@ public class MyHashTable<K,V> implements IHash<K,V> {
     public V search(K key) {
         V value = null;
         int searchKey = hash(key);
-        HashNode<K,V> searchNode = table[searchKey];
+        Data<K,V> searchNode = table[searchKey];
         while (searchNode != null) {
             if(key.equals(searchNode.getKey())){
                 value = searchNode.getValue();
@@ -52,11 +53,11 @@ public class MyHashTable<K,V> implements IHash<K,V> {
     @Override
     public void deleteKey(K key) {
         int deleteKey = hash(key);
-        HashNode<K,V> deleteNode = table[deleteKey];
+        Data<K,V> deleteNode = table[deleteKey];
         while (deleteNode != null){
             if(deleteNode.getKey().equals(key)){
-                HashNode<K,V> prev = deleteNode.getPrevious();
-                HashNode<K,V> next = deleteNode.getNext();
+                Data<K,V> prev = deleteNode.getPrevious();
+                Data<K,V> next = deleteNode.getNext();
                 if(table[deleteKey].equals(deleteNode)){
                     table[deleteKey]=next;
                 }else {
@@ -69,12 +70,11 @@ public class MyHashTable<K,V> implements IHash<K,V> {
 
 
     }
-    public void print(){
-        /*for(int i = 0 ; i < m ; i++){
-            System.out.println(table[i].getKey()+", "+table[i].getValue());
-        }*/
-        for (HashNode node:table) {
-            System.out.println(node.getValue());
+
+    public void printAll(){
+        for (Data datito: table) {
+            System.out.println(datito.getValue());
         }
     }
+
 }

@@ -1,13 +1,12 @@
 package ui;
-import model.MyHashTable;
 import model.PriorityQueue;
+import model.*;
 
-import java.util.Random;
 import java.util.Scanner;
 public class main {
     public static void main(String[] args) {
         Scanner lt = new Scanner(System.in);
-        MyHashTable<Integer,String> hash=new MyHashTable<>(9);
+        HashTable<Integer,String> hash=new HashTable<>(9);
         PriorityQueue<String> queue= new PriorityQueue<>();
         boolean contineu = true;
         int option=0;
@@ -21,7 +20,7 @@ public class main {
         hash.insert(4353,"Tuti");
         hash.insert(9554,"Tomi");
         hash.insert(1234,"Cristo");
-        hash.print();
+        hash.printAll();
 
        /* queue.insert("juan",1);
         queue.insert("Pablo",1);
