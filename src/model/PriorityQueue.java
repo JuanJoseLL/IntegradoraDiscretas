@@ -28,12 +28,12 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
         int l=2*b;
         int r=2*b+1;
         int largest;
-        if (l<=heapSize-1 && arr.get(l).getKey()> arr.get(b).getKey()){
+        if (l<=arr.size()-1 && arr.get(l).getKey() > arr.get(b).getKey()){
             largest=l;
         }else{
             largest=b;
         }
-        if(r<=heapSize-1 && arr.get(r).getKey()>largest){
+        if(r<=arr.size()-1 && arr.get(r).getKey() > arr.get(largest).getKey()){
             largest=r;
         }
         if(largest!=b){
@@ -47,25 +47,23 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
     }
 
     public void buildMaxHeap() {
-        heapSize= arr.size();
+        heapSize = arr.size();
         for (int i = arr.size()/2; i >= 0; i--) {
                 maxHeapify(i);
         }
 
     }
-
-
     @Override
     public T deQueue() {
-        if(arr.size()<2){
-            System.out.println("Error");
-            return null;
+        T max=null;
+        for(int i = 0;i<arr.size()-1;i++){
+            max = arr.get(i).getElement();
+            arr.set(i,arr.get(arr.size()-1));
+            arr.remove(arr.size()-1);
+            maxHeapify(i);
+            return max;
         }
-        T max=arr.get(0).getElement();
-        arr.set(0,arr.get(arr.size()-1));
-        arr.remove(arr.size()-1);
-        maxHeapify(1);
-        return max;
+        return null;
     }
 
     @Override
@@ -98,5 +96,12 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
     public void insert(T a, int key) {
         arr.add(new Node<>(key,a));
         buildMaxHeap();
+    }
+    public String print() {
+        String ans = "";
+        for (int i = 0; i <arr.size(); i++) {
+            ans += arr.get(i).getKey() + " ";
+        }
+        return ans;
     }
 }
