@@ -1,12 +1,15 @@
 package ui;
+import model.Clinic;
 import model.MyHashTable;
 import model.PriorityQueue;
 
 import java.util.Random;
 import java.util.Scanner;
 public class main {
+    public static Scanner lt = new Scanner(System.in);
+    public static Clinic clinic = new Clinic();
     public static void main(String[] args) {
-        Scanner lt = new Scanner(System.in);
+
         MyHashTable<Integer,String> hash=new MyHashTable<>(9);
         PriorityQueue<String> queue= new PriorityQueue<>();
         boolean contineu = true;
@@ -36,15 +39,41 @@ public class main {
         System.out.println(queue.print());
         queue.deQueue();
         System.out.println(queue.print());*/
-        /*while (contineu){
+        while (contineu){
             System.out.println("1. Ingresar paciente");
             System.out.println("2. Egreso del paciente");
+            System.out.println("3. Delete option");
+            option=lt.nextInt();
+            lt.nextLine();
             switch (option){
-                case 1:
+                case 1: registerPatient();
                     break;
                 case 2:
                     break;
+                case 3:
+                    break;
             }
-        }*/
+        }
+    }
+    public static void registerPatient(){
+        System.out.println("Type the id of the patient");
+        String id=lt.nextLine();
+        System.out.println("Type the name of the patient");
+        String name=lt.nextLine();
+        System.out.println("Type the genre of the patient 1. Masculine 2. Feminine");
+        int genre=lt.nextInt();
+        lt.nextLine();
+        System.out.println("Is the patient pregnant ?  1. Yes 2. No 3. Does not apply");
+        int pregnant = lt.nextInt();
+        lt.nextLine();
+        System.out.println("Is the patient elderly ? 1. Yes 2. No");
+        int elderly = lt.nextInt();
+        lt.nextLine();
+        System.out.println("Does patient has a serious illness ?  1. Yes 2. No");
+        int illness=lt.nextInt();
+        lt.nextLine();
+        clinic.registerPatient(id,name,genre,pregnant,elderly,illness);
+        clinic.enterPatient(clinic.search(id), clinic.search(id).getPriority());
+
     }
 }
