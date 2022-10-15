@@ -18,7 +18,10 @@ public class Clinic {
     public Patient search(String id){
         return hash.search(id);
     }
+    public void test(){
+        System.out.println( queue.getMax().getName());
 
+    }
     public HashTable<String, Patient> getHash() {
         return hash;
     }
