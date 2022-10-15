@@ -1,4 +1,4 @@
-package model;
+package model.DataEstructures;
 
 
 public class Node<T>  {
@@ -27,6 +27,9 @@ public class Node<T>  {
     }
 
 
-
+    @Override
+    public String toString() {
+        return  element+"\n";
+    }
 }
 

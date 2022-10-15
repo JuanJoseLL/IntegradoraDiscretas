@@ -1,6 +1,7 @@
-package model;
+package model.DataEstructures;
 
 import generics.IPriorityQueue;
+import model.Patient;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,10 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
 
     public void setHeapSize(int heapSize) {
         this.heapSize = heapSize;
+    }
+
+    public ArrayList<Node<T>> getArr() {
+        return arr;
     }
 
     public Node<T> getParent(int i){
@@ -52,6 +57,13 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
                 maxHeapify(i);
         }
 
+    }
+    public void deleteFromQueue(Patient obj){
+        for (int i = 0;i < arr.size();i++){
+            if(arr.get(i).getElement().equals(obj)){
+                arr.remove(i);
+            }
+        }
     }
     @Override
     public T deQueue() {
@@ -97,11 +109,9 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
         arr.add(new Node<>(key,a));
         buildMaxHeap();
     }
-    public String print() {
-        String ans = "";
-        for (int i = 0; i <arr.size(); i++) {
-            ans += arr.get(i).getKey() + " ";
+    public void print(){
+        for (int i = 0;i<arr.size();i++){
+            System.out.println(arr.get(i).toString());
         }
-        return ans;
     }
 }

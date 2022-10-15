@@ -1,7 +1,5 @@
-package  model;
-import java.util.ArrayList;
+package model.DataEstructures;
 import generics.*;
-import model.*;
 
 
 public class HashTable<K,V> implements MyHashT<K,V> {
@@ -72,8 +70,11 @@ public class HashTable<K,V> implements MyHashT<K,V> {
     }
 
     public void printAll(){
-        for (Data datito: table) {
-            System.out.println(datito.getValue());
+        for (Data<K,V> datito: table) {
+            if(datito!=null){
+                System.out.println(datito.getValue());
+            }
+
         }
     }
 

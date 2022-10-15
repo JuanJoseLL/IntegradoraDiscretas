@@ -1,4 +1,4 @@
-package model;
+package model.DataEstructures;
 public class Data<K,V> {
     private K key;
     private V value;

@@ -83,4 +83,9 @@ public class Patient {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
+    @Override
+    public String toString() {
+        return name+"       "+((illness==1)?"  Yes  ":"  No  ")+"       "+priority;
+    }
 }
