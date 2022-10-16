@@ -16,11 +16,13 @@ public class GeneralPurpose {
         System.out.println("General purpose");
         queue.print();
     }
+    public void deleteFromQueue(Patient obj){
+        queue.deleteFromQueue(obj);
+    }
+    public Patient dequeue(){
+        return queue.deQueue();
+    }
     public String list(){
-        String list="General Purpose Queue\n"+"  Name   "+"Illness  "+" Priority  \n";
-        for (int i = 0; i < queue.getArr().size();i++){
-            list+=queue.getArr().get(i).toString();
-        }
-        return list;
+        return queue.print();
     }
 }

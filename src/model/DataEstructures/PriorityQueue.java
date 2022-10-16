@@ -67,15 +67,21 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
     }
     @Override
     public T deQueue() {
-        T max=null;
-        for(int i = 0;i<arr.size()-1;i++){
-            max = arr.get(i).getElement();
-            arr.set(i,arr.get(arr.size()-1));
-            arr.remove(arr.size()-1);
-            maxHeapify(i);
+        int p = 0;
+        if(arr.size()<1){
+            return null;
+        }else{
+            for (int i=1;i < arr.size();i++){
+                if(arr.get(i).getKey()>arr.get(p).getKey()){
+                    p=i;
+                }
+            }
+            T max = arr.get(p).getElement();
+            arr.remove(p);
             return max;
         }
-        return null;
+
+
     }
 
     @Override
@@ -109,9 +115,11 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
         arr.add(new Node<>(key,a));
         buildMaxHeap();
     }
-    public void print(){
+    public String print(){
+        StringBuilder message= new StringBuilder();
         for (int i = 0;i<arr.size();i++){
-            System.out.println(arr.get(i).toString());
+            message.append(arr.get(i).toString());
         }
+        return message.toString();
     }
 }
