@@ -117,8 +117,8 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
     }
     public String print(){
         StringBuilder message= new StringBuilder();
-        for (int i = 0;i<arr.size();i++){
-            message.append(arr.get(i).toString());
+        for (Node<T> tNode : arr) {
+            message.append(tNode);
         }
         return message.toString();
     }

@@ -74,7 +74,6 @@ public class HashTable<K,V> implements MyHashT<K,V> {
             if(datito!=null){
                 System.out.println(datito.getValue());
             }
-
         }
     }
 

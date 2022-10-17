@@ -58,6 +58,7 @@ public class Clinic {
     public String patientsList(){
         String message="";
         message+=hem.list();
+        message+=gp.list();
         return message;
     }
 }

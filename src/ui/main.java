@@ -1,13 +1,23 @@
 package ui;
 import model.Clinic;
+import model.DataEstructures.HashTable;
+import model.GeneralPurpose;
 import model.Hematology;
 import model.Patient;
 
+
+import java.io.*;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+
+import java.util.Collections;
 import java.util.Scanner;
 public class main {
     public static Scanner lt = new Scanner(System.in);
     public static Clinic clinic = new Clinic();
     public static Hematology hem=new Hematology();
+    public static GeneralPurpose gp=new GeneralPurpose();
+    public static HashTable<String,Patient> hash=new HashTable<>(10);
     public static void main(String[] args) {
         Scanner lt = new Scanner(System.in);
         boolean contineu = true;
@@ -27,7 +37,7 @@ public class main {
                     case 3 -> exitQueue();
                     case 4 -> System.out.println(clinic.patientsList());
                     case 5 -> contineu = false;
-                    case 6 -> setup1();
+                    case 6 -> setup2();
                 }
             }
         }
@@ -103,18 +113,38 @@ public class main {
     public static void setup1(){
         hem.enterPatient(new Patient("1","juan",1,2,2,2),0);
         hem.enterPatient(new Patient("1","pablo",1,1,2,2),1);
-        hem.enterPatient(new Patient("1","maria",1,2,1,2),1);
-        hem.enterPatient(new Patient("1","tapete",1,2,2,2),0);
+        gp.enterPatient(new Patient("1","maria",1,2,1,2),1);
+        gp.enterPatient(new Patient("1","tapete",1,2,2,2),0);
         hem.enterPatient(new Patient("1","cristiano",1,2,2,2),0);
         System.out.println(hem.list());
-        hem.dequeue();
-        System.out.println(hem.list());
-        hem.dequeue();
-        System.out.println(hem.list());
-        hem.dequeue();
-        System.out.println(hem.list());
-        hem.dequeue();
-        System.out.println(hem.list());
+        System.out.println(gp.list());
+    }
+    public static void setup2(){
+        try {
+            File file=new File("/Users/juanjose/IdeaProjects/IntegradoraDiscretas/docs/eps.txt");
+            System.out.println("Existe: "+file.exists());
+            FileInputStream fis=new FileInputStream(file);
+            BufferedReader reader= new BufferedReader(new InputStreamReader(fis));
+            StringBuilder json= new StringBuilder();
+            String line;
+            while ((line=reader.readLine())!=null){
+                json.append(line);
+            }
+            fis.close();
+            Gson gson=new Gson();
+            Patient[] patients=gson.fromJson(json.toString(), Patient[].class);
+
+            ArrayList<Patient> arrayPatients=new ArrayList<>();
+            Collections.addAll(arrayPatients, patients);
+
+            for (Patient p: patients){
+                hash.insert(p.getId(),p);
+            }
+
+            hash.printAll();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
