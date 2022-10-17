@@ -36,7 +36,10 @@ public class main {
                     case 2 -> entryQueue();
                     case 3 -> exitQueue();
                     case 4 -> System.out.println(clinic.patientsList());
-                    case 5 -> contineu = false;
+                    case 5 -> {
+                        clinic.saveData();
+                        contineu = false;
+                    }
                     case 6 -> setup2();
                 }
             }
@@ -121,8 +124,7 @@ public class main {
     }
     public static void setup2(){
         try {
-            File file=new File("/Users/juanjose/IdeaProjects/IntegradoraDiscretas/docs/eps.txt");
-            System.out.println("Existe: "+file.exists());
+            File file=new File("eps.txt");
             FileInputStream fis=new FileInputStream(file);
             BufferedReader reader= new BufferedReader(new InputStreamReader(fis));
             StringBuilder json= new StringBuilder();

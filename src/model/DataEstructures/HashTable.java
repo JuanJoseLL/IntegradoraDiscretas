@@ -10,6 +10,11 @@ public class HashTable<K,V> implements MyHashT<K,V> {
         this.m = m;
         table = new Data[m];
     }
+
+    public Data<K, V>[] getTable() {
+        return table;
+    }
+
     public int hash(K key) {
         return (Math.abs(key.hashCode())) % m;
     }

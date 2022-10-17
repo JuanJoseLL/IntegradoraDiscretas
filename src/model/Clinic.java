@@ -1,22 +1,31 @@
 package model;
 
+import com.google.gson.Gson;
+import model.DataEstructures.Data;
 import model.DataEstructures.HashTable;
-import model.DataEstructures.PriorityQueue;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Clinic {
     private Hematology hem;
     private GeneralPurpose gp;
     private HashTable<String,Patient> hash;
+    private Gson gson;
 
 
     public Clinic() {
-       hash = new HashTable<>(5);
+        gson=new Gson();
+       hash = new HashTable<>(10);
        hem = new Hematology();
        gp = new GeneralPurpose();
-
+       loadData();
     }
     public void registerPatient(String id, String name, int genre, int pregnant, int elderly, int illness){
         hash.insert(id,new Patient(id,name,genre,pregnant,elderly,illness));
+
     }
     public void enterPatient(Patient patient, int prio,int lab){
         if(lab == 1){
@@ -50,7 +59,52 @@ public class Clinic {
         }
 
     }
+    public void loadData(){
+        try {
+            File file=new File("eps.txt");
+            FileInputStream fis=new FileInputStream(file);
+            BufferedReader reader= new BufferedReader(new InputStreamReader(fis));
+            String json="";
+            String line;
+            while ((line=reader.readLine())!=null){
+                json+=line;
+            }
+            fis.close();
+            Gson gson=new Gson();
+            Patient[] patients=gson.fromJson(json, Patient[].class);
 
+            ArrayList<Patient> arrayPatients=new ArrayList<>();
+            Collections.addAll(arrayPatients, patients);
+
+            for (Patient p: patients){
+                hash.insert(p.getId(),p);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void saveData(){
+        ArrayList<Patient> pat=new ArrayList<>();
+        try {
+            FileOutputStream fos = new FileOutputStream(new File("eps.txt"));
+            for(Data p:hash.getTable()){
+                if(p!=null){
+                    pat.add((Patient) p.getValue());
+                }
+            }
+            String json=gson.toJson(pat);
+            fos.write(json.getBytes(StandardCharsets.UTF_8));
+            fos.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     public void print(){
       hem.print();
       gp.print();
