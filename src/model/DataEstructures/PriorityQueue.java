@@ -29,31 +29,30 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
         return arr.get((int)i/2);
     }
 
-    public void maxHeapify(int b) {
-        int l=2*b;
-        int r=2*b+1;
+    public void maxHeapify(int index) {
+        int l=2*index;
+        int r=2*index+1;
         int largest;
-        if (l<=arr.size()-1 && arr.get(l).getKey() > arr.get(b).getKey()){
+        if (l<=arr.size()-1 && arr.get(l).getKey() > arr.get(index).getKey()){
             largest=l;
         }else{
-            largest=b;
+            largest=index;
         }
         if(r<=arr.size()-1 && arr.get(r).getKey() > arr.get(largest).getKey()){
             largest=r;
         }
-        if(largest!=b){
-            Node<T> temp = arr.get(b);
+        if(largest!=index){
+            Node<T> temp = arr.get(index);
             Node<T> temp2= arr.get(largest);
-            arr.set(b,temp2);
+            arr.set(index,temp2);
             arr.set(largest,temp);
             maxHeapify(largest);
         }
 
     }
-
     public void buildMaxHeap() {
         heapSize = arr.size();
-        for (int i = arr.size()/2; i >= 0; i--) {
+        for (int i = arr.size(); i >= 0; i--) {
                 maxHeapify(i);
         }
 
@@ -71,13 +70,14 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
         if(arr.size()<1){
             return null;
         }else{
-            for (int i=1;i < arr.size();i++){
+            for (int i=0;i < arr.size();i++){
                 if(arr.get(i).getKey()>arr.get(p).getKey()){
                     p=i;
                 }
             }
             T max = arr.get(p).getElement();
             arr.remove(p);
+            maxHeapify(1);
             return max;
         }
 
@@ -90,36 +90,35 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
     }
 
     @Override
-    public void increaseKey(T a, int key) {
-        int aux=-1;
-       for(int i=0;i<arr.size();i++){
-           if(arr.get(i).getElement().equals(a)){
-                aux=i;
-           }
-           if(key<arr.get(aux).getKey()){
-               System.out.println("The key is lower than the actual");
-           }
-       }
-       while (aux>0 && arr.get(aux/2).getKey()<arr.get(aux).getKey()){
-           Node<T> temp1 = arr.get(aux/2);
-           Node<T> temp2 = arr.get(aux);
-           arr.set(aux, temp1);
-           arr.set(aux/2, temp2);
-           aux = aux/2;
-       }
-
+    public void increaseKey(T element, int newKey) {
+        int index = -1;
+        for (int i = 0; i < arr.size(); i++) {
+            if(arr.get(i).getElement().equals(element)){
+                index = i;
+            }
+        }
+        if(newKey > arr.get(index).getKey()) {
+            arr.get(index).setKey(arr.get(index).getKey()+newKey);
+            buildMaxHeap();
+        }
     }
-
     @Override
     public void insert(T a, int key) {
         arr.add(new Node<>(key,a));
         buildMaxHeap();
     }
-    public String print(){
+    public String print1(){
         StringBuilder message= new StringBuilder();
         for (Node<T> tNode : arr) {
             message.append(tNode);
         }
         return message.toString();
+    }
+    public String print() {
+        String ans = "";
+        for (int i = 0; i <arr.size(); i++) {
+            ans += arr.get(i).getKey() + " ";
+        }
+        return ans;
     }
 }

@@ -18,7 +18,7 @@ public class Clinic {
 
     public Clinic() {
         gson=new Gson();
-       hash = new HashTable<>(10);
+       hash = new HashTable<>(100);
        hem = new Hematology();
        gp = new GeneralPurpose();
        loadData();
@@ -61,7 +61,7 @@ public class Clinic {
     }
     public void loadData(){
         try {
-            File file=new File("eps.txt");
+            File file=new File("eps.json");
             FileInputStream fis=new FileInputStream(file);
             BufferedReader reader= new BufferedReader(new InputStreamReader(fis));
             String json="";
@@ -87,7 +87,7 @@ public class Clinic {
     public void saveData(){
         ArrayList<Patient> pat=new ArrayList<>();
         try {
-            FileOutputStream fos = new FileOutputStream(new File("eps.txt"));
+            FileOutputStream fos = new FileOutputStream(new File("eps.json"));
             for(Data p:hash.getTable()){
                 if(p!=null){
                     pat.add((Patient) p.getValue());
@@ -96,7 +96,6 @@ public class Clinic {
             String json=gson.toJson(pat);
             fos.write(json.getBytes(StandardCharsets.UTF_8));
             fos.close();
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
