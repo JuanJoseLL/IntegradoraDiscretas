@@ -2,10 +2,12 @@ package ui;
 import model.Clinic;
 import model.Patient;
 
-import java.util.Scanner;
+
+import java.util.*;
 public class Main {
     public static Scanner lt = new Scanner(System.in);
     public static Clinic clinic = new Clinic();
+
     public static void main(String[] args) {
         Scanner lt = new Scanner(System.in);
         boolean contineu = true;
@@ -50,7 +52,7 @@ public class Main {
             System.out.println("Is the patient elderly ? 1. Yes 2. No");
             int elderly = lt.nextInt();
             lt.nextLine();
-            System.out.println("Does patient has a serious illness ?  1. Yes 2. No");
+            System.out.println("Does the patient has a serious illness ?  1. Yes 2. No");
             int illness=lt.nextInt();
             lt.nextLine();
             clinic.registerPatient(id,name,genre,pregnant,elderly,illness);
@@ -69,6 +71,8 @@ public class Main {
         String id = lt.nextLine();
         if(!clinic.alreadyRegisterePatient(id)){
             System.out.println("The patient is not registered");
+        }else if(clinic.getHem().getQueue().search(id)){
+            System.out.println("Patient already entered to one queue");
         }else{
             System.out.println("Send to 1. Hematology 2. General purpose");
             int lab=lt.nextInt();
@@ -80,13 +84,16 @@ public class Main {
             if(undo==1){
                 clinic.deleteFromQueue(clinic.search(id),lab);
             }
+            System.out.println("Client added successfully to the queue");
+
         }
-        System.out.println("Client´s already in the queue.");
+
     }
     public static void exitQueue(){
         System.out.println("From which unit do you want to dequeue the patient ?  1. Hematology 2. General Purpose ");
         int lab=lt.nextInt();
         lt.nextLine();
+
         Patient pat=clinic.dequeue(lab);
         if(pat!=null){
             System.out.println("The patient "+pat.getName()+" has successfully exited the queue");
@@ -101,7 +108,6 @@ public class Main {
         }
         System.out.println("Client had been exited succesfully");
     }
-
 
 }
 

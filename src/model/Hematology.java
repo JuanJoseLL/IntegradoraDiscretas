@@ -22,9 +22,12 @@ public class Hematology {
         return queue.deQueue();
     }
     public String list(){
-        String list="    Hematology\nName      illness      priority \n";
+        String list="    Hematology\n";
         list+= queue.print();
         return list;
+    }
+    public PriorityQueue<Patient> getQueue() {
+        return queue;
     }
 }
 

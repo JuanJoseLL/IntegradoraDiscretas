@@ -107,18 +107,24 @@ public class PriorityQueue<T> implements IPriorityQueue<T> {
         arr.add(new Node<>(key,a));
         buildMaxHeap();
     }
-    public String print1(){
-        StringBuilder message= new StringBuilder();
+    public boolean search(String id){
+        for (Node<T> node:arr){
+            Patient a=(Patient) node.getElement();
+            if(a.getId().equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public String print(){
+        String message="";
+        int cont=0;
         for (Node<T> tNode : arr) {
-            message.append(tNode);
+            Patient a=(Patient)tNode.getElement();
+            message +=++cont+". "+a.getName()+"\n";
         }
-        return message.toString();
+        return message;
     }
-    public String print() {
-        String ans = "";
-        for (int i = 0; i <arr.size(); i++) {
-            ans += arr.get(i).getKey() + " ";
-        }
-        return ans;
-    }
+
+
 }

@@ -104,14 +104,18 @@ public class Clinic {
         }
 
     }
-    public void print(){
-      hem.print();
-      gp.print();
-    }
     public String patientsList(){
         String message="";
         message+=hem.list();
         message+=gp.list();
         return message;
+    }
+
+    public Hematology getHem() {
+        return hem;
+    }
+
+    public GeneralPurpose getGp() {
+        return gp;
     }
 }

@@ -23,8 +23,12 @@ public class GeneralPurpose {
         return queue.deQueue();
     }
     public String list(){
-        String list="   General Purpose\nName      illness      priority \n";
+        String list="   General Purpose\n";
         list+= queue.print();
         return list;
+    }
+
+    public PriorityQueue<Patient> getQueue() {
+        return queue;
     }
 }
