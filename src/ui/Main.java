@@ -107,6 +107,7 @@ public class Main {
             System.out.println("No patients found in the queue");
         }
         System.out.println("Client had been exited succesfully");
+
     }
 
 }
